@@ -1,0 +1,26 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "UserDetailsGrpcClient";
+
+package userdetails;
+
+service UserDetails {
+  // rpc method
+  rpc WelcomeUser (RequestMessage) returns (ResponseHello);
+  rpc GetUserDetails(RequestMessage) returns (ResponseUserDetails);
+}
+
+message RequestMessage {
+  string userName = 1;
+}
+
+message ResponseHello {
+  string helloMessage = 1;
+}
+
+message ResponseUserDetails {
+	string firstName = 1;
+	string lastName = 2;
+	string address = 3;
+	string phone = 4;
+}
