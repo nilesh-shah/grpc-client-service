@@ -13,29 +13,51 @@ namespace UserDetailsGrpc
             using var channel = GrpcChannel.ForAddress("https://localhost:7042");
             var client = new UserDetails.UserDetailsClient(channel);
 
-            Console.WriteLine("Provide user name to get the details");
-            string userName = Console.ReadLine();
-
-            var welcomeMessage = client.WelcomeUserAsync(new RequestMessage()
+            while (true)
             {
-                UserName = userName
-            });
+                Console.WriteLine("Provide your user name to get basic handshake");
+                string userName = Console.ReadLine();
 
-            Console.WriteLine(welcomeMessage.ResponseAsync.Result.HelloMessage);
+                try
+                {
+                    var welcomeMessage = client.WelcomeUserAsync(new RequestMessage()
+                    {
+                        UserName = userName
+                    });
 
-            Console.WriteLine("Press ENTER to get user details ...");
-            Console.ReadLine();
+                    Console.WriteLine(welcomeMessage.ResponseAsync.Result.HelloMessage);
 
-            var replyMessage = client.GetUserDetailsAsync(new RequestMessage()
-            {
-                UserName = userName
-            });
-            
-            Console.WriteLine("Your Address is: " + replyMessage.ResponseAsync.Result.Address);
-            Console.WriteLine("Your Phone is: " + replyMessage.ResponseAsync.Result.Phone);
+                    Console.WriteLine("Press ENTER to get your details ...");
+                    Console.ReadLine();
 
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
+                    var replyMessage = client.GetUserDetailsAsync(new RequestMessage()
+                    {
+                        UserName = userName
+                    });
+
+                    var response = replyMessage.ResponseAsync.Result;
+
+                    if (!string.IsNullOrWhiteSpace(response.FirstName))
+                    {
+                        Console.WriteLine("Your First Name is: " + replyMessage.ResponseAsync.Result.FirstName);
+                        Console.WriteLine("Your Last Name is: " + replyMessage.ResponseAsync.Result.LastName);
+                        Console.WriteLine("Your Address is: " + replyMessage.ResponseAsync.Result.Address);
+                        Console.WriteLine("Your Phone is: " + replyMessage.ResponseAsync.Result.Phone);
+                    }
+                    else
+                        Console.WriteLine("User not found ...");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("An error occured" + ex.Message);
+                    Console.WriteLine("Press any key to exit...");
+                    Console.ReadKey();
+                    break;
+                }
+
+                Console.WriteLine("Press any key to continue... OR press CTRC + C to exit");
+                Console.ReadKey();
+            }
         }
     }
 }

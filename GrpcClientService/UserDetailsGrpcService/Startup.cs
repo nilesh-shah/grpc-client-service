@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using UserDetailsGrpcService.Database;
 
 namespace UserDetailsGrpcService
 {
@@ -30,6 +31,9 @@ namespace UserDetailsGrpcService
                     await context.Response.WriteAsync("Communication with gRPC endpoints must be made through a gRPC client.");
                 });
             });
+
+            // create in-memory database
+            UserDatabase.SeedUsers();
         }
     }
 }

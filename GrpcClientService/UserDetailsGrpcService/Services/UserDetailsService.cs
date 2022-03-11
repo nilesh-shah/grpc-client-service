@@ -1,6 +1,7 @@
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using UserDetailsGrpcService.Database;
 
 namespace UserDetailsGrpcService
 {
@@ -29,18 +30,26 @@ namespace UserDetailsGrpcService
         {
             _logger.LogInformation("Retrieving user details over grpc async channel ...");
 
-            ResponseUserDetails userDetails = new ResponseUserDetails
-            {
-                FirstName = "Nilesh",
-                LastName = "Shah",
-                Address = "Pune",
-                Phone = "1111"
-            };
+            ResponseUserDetails userDetailsResponse = new();
+            Database.UserDetails userDetails = UserDatabase.GetUserDetails(request.UserName);
 
             System.Threading.Thread.Sleep(500); // Intentional pause
-            _logger.LogInformation("sending user details over grpc async channel ...");
 
-            return Task.FromResult(userDetails);
+            if (userDetails != null)
+            {
+                _logger.LogInformation("sending user details over grpc async channel ...");
+                userDetailsResponse = new()
+                {
+                    FirstName = userDetails.FirstName,
+                    LastName = userDetails.LastName,
+                    Address = userDetails.Address,
+                    Phone = userDetails.Phone,
+                };
+            }
+            else
+                _logger.LogInformation("user not found ...");
+
+            return Task.FromResult(userDetailsResponse);
         }
     }
 }
