@@ -9,6 +9,7 @@ namespace UserDetailsGrpc
         public static void Main(string[] args)
         {
             Console.WriteLine("GRPC Client is starting up ....");
+            Console.WriteLine("Information :: nilesh, grpcclient, grpcserver and propeller are valid users");
 
             using var channel = GrpcChannel.ForAddress("https://localhost:7042");
             var client = new UserDetails.UserDetailsClient(channel);

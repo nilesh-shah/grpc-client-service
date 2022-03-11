@@ -9,11 +9,9 @@ This is very basic GRPC client server application developed using ASP.NET 5.0 an
 
 This section will guide users through getting your code up and running on their own system.
 
-**I. Running server and client **
-
 # I. Running server and client
 
-1. **Clone** **grpc-client-server** **Git** **Repo -** [*https://github.com/nilesh-shah/grpc-client-service**](https://github.com/nilesh-shah/grpc-client-service)\*\* \*\*
+1. **Clone** **grpc-client-server** **Git** **Repo -** [*https://github.com/nilesh-shah/grpc-client-service**](https://github.com/nilesh-shah/grpc-client-service)
 2. Ensure that **.NET 5.0** is installed on the machine (It is framework dependency as of now) 
 3. Once cloned, open GrpcClientService.sln file in VS 2019. VS 2019 is not hard dependency but it is easy to compile and run the application
 4. If you are opening in VS 2019, compile the solution. The build should succeed
@@ -22,7 +20,7 @@ This section will guide users through getting your code up and running on their 
 7. Once both are running, provide username on client console and follow instructions.
 8. You can see logs are generated on server console to give information about GRPC calls execution
 
-# Important inpunts
+# Important inputs
 
 1. **nilesh**, **grpcclient**, **grpcserver** and **propeller** are valid users
 2. Database is in memory (of server)
